@@ -1,3 +1,5 @@
+// 
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -9,22 +11,9 @@ const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
   const [editedTask, setEditedTask] = useState({ ...task });
   const [fetchedTask, setFetchedTask] = useState(null);
 
-  useEffect(() => {
-    // Fetch task details when component mounts or task.id changes
-    axios.get(`http://localhost:8000/api/v1/tasks/${task.id}/`)
-      .then((response) => {
-        setFetchedTask(response.data);
-        setEditedTask(response.data); // Update editedTask with fetched data
-      })
-      .catch((error) => {
-        console.error('Error fetching task:', error);
-        toast.error("Error fetching task details, please try again.");
-      });
-  }, [task.id]);
-
   const handleUpdate = (e) => {
     e.preventDefault();
-
+    
     // Validate due date
     const today = new Date().toISOString().split("T")[0];
     if (editedTask.due_date < today) {
@@ -36,6 +25,34 @@ const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
       ...editedTask
       // category: editedTask.custom_category || editedTask.category,
     };
+
+    useEffect(() => {
+      // Fetch task details when component mounts or task.id changes
+      axios.get(`http://localhost:8000/api/v1/tasks/${task.id}/`)
+        .then((response) => {
+          setFetchedTask(response.data);
+          setEditedTask(response.data); // Update editedTask with fetched data
+        })
+        .catch((error) => {
+          console.error('Error fetching task:', error);
+          toast.error("Error fetching task details, please try again.");
+        });
+    }, [task.id]);
+
+  //   axios.patch(`http://localhost:8000/api/v1/tasks/${task.id}/`, payload)
+  //     .then((response) => {
+  //       setIsEditing(false);
+  //       toast.success("Task updated successfully!");
+  //       // Add this line to refresh the task list
+  //       if (typeof onUpdate === "function") {
+  //         onUpdate();  // This will trigger the fetchData in AppPage
+  //       }
+  //       console.log(task)
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error updating task:', error);
+  //       toast.error("Error updating task, please try again.");
+  //     });
   };
 
   const handleDelete = () => {
@@ -60,15 +77,13 @@ const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
       [name]: type === 'checkbox' ? checked : value
     }));
   };
-
-  if (!fetchedTask) {
-    return <div>Loading...</div>;
+  const print = () => {
+    console.log(task)
   }
-
   return (
     <div className="task-item">
       {isEditing ? (
-        <form onSubmit={onUpdate}>
+        <form onSubmit={handleUpdate}>
           <label>
             Title:
             <input
@@ -98,7 +113,6 @@ const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
             >
               <option value="Pending">Pending</option>
               <option value="In_progress">In Progress</option>
-              <option value="Completed">Completed</option>
             </select>
           </label>
 
@@ -115,7 +129,7 @@ const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
             </select>
           </label>
 
-          <label>
+          {/* <label>
             Due Date:
             <input
               type="date"
@@ -123,7 +137,7 @@ const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
               value={editedTask.due_date}
               onChange={handleInputChange}
             />
-          </label>
+          </label> */}
 
           <label>
             Category:
@@ -169,14 +183,17 @@ const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
         </form>
       ) : (
         <>
-          <h3>{fetchedTask.title}</h3>
-          <p>Status: {fetchedTask.status}</p>
-          <p>Due: {task.due_date}</p>
-          <p>Priority: {fetchedTask.priority}</p>
-          <p>Category: {(categories?.find(cat => cat.id === task.category)?.name) || 'No category'}</p>
-          <p>Important: {fetchedTask.is_important ? 'Yes' : 'No'}</p>
+          <h3>{task.title}</h3>
+          <p>Description: {fetchedTask.description}</p>
+          <p>Status: {task.status}</p>
+          {/* <p>Due: {task.due_date}</p> */}
+          <p>Priority: {task.priority}</p>
+          <p>Category: { (categories?.find(cat => cat.id === task.category)?.name) || 
+             'No category'}
+            </p>          
+          <p>Important: {task.is_important ? 'Yes' : 'No'}</p>
           <button onClick={() => setIsEditing(true)}>Edit</button>
-          <button onClick={handleDelete}>Delete</button>
+          <button onClick={print}>Delete</button>
         </>
       )}
     </div>
