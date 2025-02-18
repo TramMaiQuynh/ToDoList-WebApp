@@ -1,11 +1,14 @@
 # ToDoList WebApp
 
 This is a Django-based web application for managing a to-do list. Follow the instructions below to set up and run the project on your computer.
+Recommend using Ubuntu
 
 ## Prerequisites
 
 - Python 3.12 or higher
 - PostgreSQL
+- Node.js
+  - Ensure that you have add Node .js into PATH
 - Virtualenv </br>
   - Ensure that the virtual environment is activated whenever you work on the project.
 
