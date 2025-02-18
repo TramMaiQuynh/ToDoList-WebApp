@@ -83,6 +83,8 @@ Go to this link: https://www.enterprisedb.com/downloads/postgres-postgresql-down
 
 1. Create a PostgreSQL user and database:
 
+##### <span style="color:red">PLEASE MAKE SURE THAT YOU DO NOT SKIP THIS STEP AND DO SIMILARLY TO THIS INSTRUCTION!</span>
+ 
 First, after finishing install PostgreSQL, need to create PostgreSQL user and database for this project. 
 We run PostgreSQL by this command:
 
@@ -100,7 +102,7 @@ ALTER USER todo_user CREATEDB;
 2. Update settings.py:
 
 - After creating PostgreSQL user and database for this project, open your setting.py file in .\Backend\todo_backend\setting.py
-- Do not change anything in this file here and ENSURE the DATABASES configuration in settings.py is correct as below:
+- Do not change anything in this file here and just CHECK the DATABASES configuration in settings.py is correct as below:
 
 ```sh
 DATABASES = {
