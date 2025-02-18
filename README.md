@@ -99,7 +99,7 @@ ALTER USER todo_user CREATEDB;
 ```
 2. Update settings.py:
 
-- After creating PostgreSQL user and database for this project, open your setting.py file in .\Backend\setting.py
+- After creating PostgreSQL user and database for this project, open your setting.py file in .\Backend\todo_backend\setting.py
 - Do not change anything in this file here and ENSURE the DATABASES configuration in settings.py is correct as below:
 
 ```sh
