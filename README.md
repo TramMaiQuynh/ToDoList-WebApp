@@ -83,10 +83,13 @@ Go to this link: https://www.enterprisedb.com/downloads/postgres-postgresql-down
 
 1. Create a PostgreSQL user and database:
 
+First, after finishing install PostgreSQL, need to create PostgreSQL user and database for this project. 
+We run PostgreSQL by this command:
+
 ```sh
 sudo -u postgres psql
 ```
-- In the PostgreSQL prompt, run the following commands:
+- In the PostgreSQL prompt, run the following commands to create PostgreSQL user and database for this project:
 
 ```sh
 CREATE USER todo_user WITH PASSWORD 'mypassword';
@@ -96,7 +99,8 @@ ALTER USER todo_user CREATEDB;
 ```
 2. Update settings.py:
 
-- Ensure the DATABASES configuration in settings.py is correct:
+- After creating PostgreSQL user and database for this project, open your setting.py file in .\Backend\setting.py
+- Do not change anything in this file here and ENSURE the DATABASES configuration in settings.py is correct as below:
 
 ```sh
 DATABASES = {
@@ -125,15 +129,32 @@ if 'test' in sys.argv:
 
 5. Apply Migrations
 
+Next, run these command lines:
+
 ```sh
 python Backend/manage.py makemigrations
 python Backend/manage.py migrate
 ```
 
-6. Run the Development Server
+Finish! You have successfully set up database for this project. Now let run the server and the frontend in next step
+
+### 5. Run the Development Server
+
+Please make sure that you are standing at Backend folder .\Backend, and run the following command to run the server:
 
 ```sh
-python Backend/manage.py runserver
+python manage.py runserver
 ```
+
+Next, simutanously, make sure that you are at .\Frontend\todo_frontend, and run this code:
+
+```sh
+npm install
+npm start
+```
+
+## FINISHED~~
+
+You will see the new window open by browser, this is our project!
 
 
